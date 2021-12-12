@@ -7,6 +7,7 @@ import ru.netology.domain.TicketOffer;
 import ru.netology.repository.TicketRepository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 @NoArgsConstructor
 @Data
@@ -29,7 +30,7 @@ public class TicketManager {
         repository.removeById(id);
     }
 
-    public TicketOffer[] searchBy(String from, String to) {
+    public TicketOffer[] searchBy(String from, String to, Comparator<TicketOffer> comparator) {
         TicketOffer[] result = new TicketOffer[0];
         for (TicketOffer ticket : repository.findAll()) {
             if (ticket.getFrom().equalsIgnoreCase((from)) && ticket.getTo().equalsIgnoreCase(to)) {
@@ -38,7 +39,7 @@ public class TicketManager {
                 tmp[tmp.length - 1] = ticket;
                 result = tmp;
             }
-            Arrays.sort(result);
+            Arrays.sort(result, comparator);
         }
         return result;
     }
